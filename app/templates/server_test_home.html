@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <style type="text/css">
+    table.curvedEdges { border:3px solid Red; }
+    table.curvedEdges td, table.curvedEdges th { border-bottom:1px dotted black;padding:5px; }
+    </style>
+
+    <style>
+    table.Tbl {
+        border: 1px solid black;
+    }
+    </style>
+</head>
+<body>
+    <form>
+        <p align="left"><a href="server">Server</a> (click here to return to home page)</p>
+
+{#        Trigger--------------------------------------------------------------------------------------------------#}
+        <table class="curvedEdges" align="left">
+            {% for i in trigger_table %}
+                <tr>
+                {% if forloop.first %}
+                        <th><font color="#8b0000">{{i.0}}</font><br></th>
+                        <th><font color="#8b0000">{{i.1}}</font><br></th>
+                {% else %}
+                        <td>{{i.0}}<br></td>
+                        <td>{{i.1}}<br></td>
+                {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+        <br><br><br><br>
+        <p align="left"><input type="button" value="Trigger start" onClick="location.href='trigger_start'" >
+                        <input type="button" value="Trigger stop" onClick="location.href='trigger_stop'" ></p>
+
+{#        Procedure--------------------------------------------------------------------------------------------------#}
+        <br><br>
+        <font face="consolas">
+        DELIMITER //<br>
+        create procedure proc1<br>
+        (IN nm CHAR(20))<br>
+        BEGIN<br>
+        select name, comment from app_user where name = nm;<br>
+        END //<br>
+        DELIMITER ;
+        </font>
+        <p><input type="text" name="proc" style="width: 200px" placeholder="name from users table">
+           <input type="button" value="Perform procedure" onClick="location.href='proc?name='+this.form.proc.value" ></p>
+        <table class="curvedEdges" align="left" border="0">
+            {% for i in procedure_table %}
+                <tr>
+                {% if forloop.first %}
+                        <th><font color="#8b0000">{{i.0}}</font><br></th>
+                        <th><font color="#8b0000">{{i.1}}</font><br></th>
+                {% else %}
+                        <td>{{i.0}}<br></td>
+                        <td>{{i.1}}<br></td>
+                {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+        <br><br><br><br>
+
+{#        Event--------------------------------------------------------------------------------------------------#}
+        Here you can create new event<br>
+        <p><input type="text" name="E1" style="width: 200px" placeholder="event name">
+            <input type="text" name="E2" style="width: 600px" placeholder="schedule">
+            <input type="button" value="Create" onClick="location.href='new_event?name='+this.form.E1.value+'&schedule='+this.form.E2.value" ></p>
+        <p>
+            <font face="consolas">
+            schedule:<br>
+                AT timestamp [+ INTERVAL interval] ...<br>
+                | EVERY interval<br>
+                  [STARTS timestamp [+ INTERVAL interval] ...]<br>
+                  [ENDS timestamp [+ INTERVAL interval] ...]<br><br>
+                interval:<br>
+                quantity {YEAR | QUARTER | MONTH | DAY | HOUR | MINUTE |<br>
+                          WEEK | SECOND | YEAR_MONTH | DAY_HOUR | DAY_MINUTE |<br>
+                          DAY_SECOND | HOUR_MINUTE | HOUR_SECOND | MINUTE_SECOND}<br><br>
+            </font>
+        </p>
+        Event report <br>
+        <table class="curvedEdges" align="left" border="0">
+            {% for i in event_table %}
+                <tr>
+                {% if forloop.first %}
+                        <th><font color="#8b0000">{{i.0}}</font><br></th>
+                        <th><font color="#8b0000">{{i.1}}</font><br></th>
+                {% else %}
+                        <td>{{i.0}}<br></td>
+                        <td>{{i.1}}<br></td>
+                {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+
+
+        <br><br><br><br>
+
+{#        Transactions--------------------------------------------------------------------------------------------------#}
+        <br>
+        <br>
+    Transactions test<br>
+        <table class="curvedEdges" align="left" border="0">
+            {% for i in transaction_table %}
+                <tr>
+                {% if forloop.first %}
+                        <th><font color="#8b0000">{{i.0}}</font><br></th>
+                        <th><font color="#8b0000">{{i.1}}</font><br></th>
+                {% else %}
+                        <td>{{i.0}}<br></td>
+                        <td>{{i.1}}<br></td>
+                {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+        <br><br><br><br>
+        <p><input type="text" name="T1" style="width: 200px" placeholder="some MySQL query">
+           <input type="button" value="Execute" onClick="location.href='session1?code='+this.form.T1.value" ></p>
+    </form>
+</body>
+</html>
